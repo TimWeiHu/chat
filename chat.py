@@ -1,15 +1,15 @@
 #讀取檔案
 def read(input_file):
     data = []
-    with open(input_file, 'r', encoding='utf-8') as f:
+    with open(input_file, 'r', encoding='utf-8-sig') as f:
         for line in f:
             data.append(line.strip())
     return data
 
 # 以人名進行檢索，並將人名下的訊息加上發送者（name:）
-def speak(names, data):
+def convert(names, data):
     chat_line = []
-    speaker = ''
+    speaker = None
     for line in data:
         for name in names:
             if name == line:
@@ -25,22 +25,15 @@ def save(output_file, chat):
         for c in chat:
             f.write(c + '\n')
 
+#定義 main funtion
+def main():
+    data = read('input.txt')
+    names = ['Allen', 'Tom']    #宣告此對話的參與者
+    chat = convert(names, data)
+    save('output.txt',chat)
 
-data = read('input.txt')
+    for line in chat:
+        print(line)
+    print('')
 
-# 去除 ufeff
-data[0] = data[0].encode('utf-8').decode('utf-8-sig')
-
-names = ['Allen', 'Tom']
-
-chat = speak(names, data)
-
-save('output.txt',chat)
-
-
-for line in data:
-    print(line)
-print('')
-# print(data)
-
-print(chat)
+main()
